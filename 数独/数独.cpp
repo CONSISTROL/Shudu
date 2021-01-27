@@ -19,11 +19,22 @@ int main() {
 }
 
 void input() {
-
+	int i, j;
+	for (i = 0; i < 9; i++)
+		for (j = 0; j < 9; j++)
+			cin >> num[i][j];
 }
 
 void output() {
-
+	int i, j;
+	for (i = 0; i < 9; i++) {
+		if (i % 3 == 0)cout << endl;
+		for (j = 0; j < 9; j++) {
+			if (j % 3 == 0)cout << " ";
+			cout << num[i][j] << " ";
+		}
+		cout << endl;
+	}
 }
 
 bool check(int n, int key) {
