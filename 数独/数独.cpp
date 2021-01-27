@@ -52,5 +52,20 @@ bool check(int n, int key) {
 }
 
 void dfs(int n) {
+	if (n > 80) { sign = true; return; }
 
+	int i;
+	int x = n / 9;
+	int y = n % 9;
+
+	if (num[x][y] != 0)dfs(n + 1);
+
+	for (i = 1; i < 10; i++) {
+		if (check(n, i)) {
+			num[x][y] = i;
+			dfs(n + 1);
+			if (sign == true) return;
+			num[x][y] = 0;
+		}
+	}
 }
