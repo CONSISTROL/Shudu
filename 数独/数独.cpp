@@ -1,4 +1,5 @@
 ﻿#include<iostream>
+#include<ctime>
 using namespace std;
 
 int num[9][9];
@@ -12,9 +13,11 @@ void dfs(int n);
 int main() {
 	cout << "input:" << endl;
 	input();
+	int program_time = clock();
 	dfs(0);
 	cout << "output:" << endl;
 	output();
+	cout << "The run(dfs) time is: " << double(clock() - program_time) / 1000 << "s" << endl;
 	return 0;
 }
 
