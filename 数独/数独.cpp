@@ -1,5 +1,6 @@
 ﻿#include<iostream>
 #include<ctime>
+#include<Windows.h>
 using namespace std;
 
 int num[9][9];
@@ -17,7 +18,7 @@ int main() {
 	dfs(0);
 	cout << "output:" << endl;
 	output();
-	cout << "The run(dfs) time is: " << double(clock() - program_time) / 1000 << "s" << endl;
+	cout << "The run time is: " << double(clock() - program_time) / 1000 << "s" << endl;
 	return 0;
 }
 
@@ -54,7 +55,33 @@ bool check(int n, int key) {
 	return true;
 }
 
+void bar(int n) {
+	static int cnt = 0;
+	static int bar_time = clock();
+	if ((clock() - bar_time) > 3000) {//长时间未响应，刷新进度条
+		bar_time = clock();
+		//cnt = 0;//回弹
+		printf(" time:%5.2fs",(float)bar_time/1000);
+		for (int i = 0; i < 12; i++)
+			printf("\b");
+	}
+	if (n>cnt) {//防回弹减速
+		printf("\r");//与system("\r")相比，防频闪，速度更快
+		int j;
+		for (j = 1; j <= n; j++) {
+			cout << "█";
+		}
+		for (; j <= 80; j++) {
+			cout << " ";
+		}
+		cout << "  " << n << "/81";
+		cnt++;
+		if (n == 81)cout << endl;
+	}
+}
+
 void dfs(int n) {
+	bar(n);
 	if (n > 80) { sign = true; return; }
 
 	int i;
