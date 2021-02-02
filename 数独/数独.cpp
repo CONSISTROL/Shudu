@@ -13,7 +13,7 @@ bool check(int n, int key);
 void dfs(int n);
 
 int main() {
-	cout << "手动输入请按1,文件输入请按2" << endl;
+	cout << "控制台输入请按1,文件输入请按2" << endl;
 	int n; cin >> n;
 	if (input(n)) return 0;
 	program_time = clock();//从这开始记录时间
@@ -23,21 +23,22 @@ int main() {
 }
 
 int input(int n) {
-	cout << "input:" << endl;
 	switch (n) {
-	case 1:
+	case 1: {
+		cout << "input:" << endl;
 		int i, j;
 		for (i = 0; i < 9; i++)
 			for (j = 0; j < 9; j++)
 				cin >> num[i][j];
 		break;
-	case 2:
+	}
+	case 2: {
 		ifstream in("in.txt");
-		if (!in.is_open()) { 
-			cout << "file error" << endl; 
-			return 1;
+		if (!in.is_open()) {
+			ofstream out("in.txt");
+			out.close();
 		}
-
+		system("in.txt");
 		int t1;
 		cout << "读取数组" << endl;
 		int*p = &num[0][0];
@@ -46,9 +47,10 @@ int input(int n) {
 			*p = t1;
 			p++;
 		}
-		in.close();
 		output(0);
+		in.close();
 		break;
+	}
 	}
 	return 0;
 }
