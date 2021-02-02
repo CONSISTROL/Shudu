@@ -1,10 +1,10 @@
 ﻿#include<iostream>
 #include<ctime>
-#include<Windows.h>
 using namespace std;
 
 int num[9][9];
 bool sign = false;
+int program_time;
 
 void input();
 void output();
@@ -12,17 +12,16 @@ bool check(int n, int key);
 void dfs(int n);
 
 int main() {
-	cout << "input:" << endl;
 	input();
-	int program_time = clock();
+	program_time = clock();
 	dfs(0);
-	cout << "output:" << endl;
 	output();
 	cout << "The run time is: " << double(clock() - program_time) / 1000 << "s" << endl;
 	return 0;
 }
 
 void input() {
+	cout << "input:" << endl;
 	int i, j;
 	for (i = 0; i < 9; i++)
 		for (j = 0; j < 9; j++)
@@ -30,6 +29,7 @@ void input() {
 }
 
 void output() {
+	cout << "output:" << endl;
 	int i, j;
 	for (i = 0; i < 9; i++) {
 		if (i % 3 == 0)cout << endl;
@@ -38,6 +38,31 @@ void output() {
 			cout << num[i][j] << " ";
 		}
 		cout << endl;
+	}
+}
+
+void bar(int n) {//进度条
+	static int cnt = 0;
+	static int bar_time = clock();
+	if (clock() - bar_time > 1000 && clock() - program_time > 5000) {//长时间未响应，给出提示
+		bar_time = clock();
+		//cnt = 0;//会回弹
+		printf(" waiting time:%2.0fs", float(bar_time - program_time) / 1000);
+		for (int i = 0; i < 17; i++)
+			printf("\b");
+	}
+	if (n > cnt) {//防回弹减速
+		printf("\r");//与system("\r")相比，防频闪，速度更快
+		int j;
+		for (j = 1; j <= n; j++) {
+			cout << "█";
+		}
+		for (; j <= 80; j++) {
+			cout << " ";
+		}
+		cout << "  " << n << "/81";
+		cnt++;
+		if (n == 81)cout << endl;
 	}
 }
 
@@ -53,31 +78,6 @@ bool check(int n, int key) {
 		for (j = y; j < y + 3; j++)
 			if (num[i][j] == key)return false;//cell
 	return true;
-}
-
-void bar(int n) {
-	static int cnt = 0;
-	static int bar_time = clock();
-	if ((clock() - bar_time) > 3000) {//长时间未响应，刷新进度条
-		bar_time = clock();
-		//cnt = 0;//回弹
-		printf(" time:%5.2fs",(float)bar_time/1000);
-		for (int i = 0; i < 12; i++)
-			printf("\b");
-	}
-	if (n>cnt) {//防回弹减速
-		printf("\r");//与system("\r")相比，防频闪，速度更快
-		int j;
-		for (j = 1; j <= n; j++) {
-			cout << "█";
-		}
-		for (; j <= 80; j++) {
-			cout << " ";
-		}
-		cout << "  " << n << "/81";
-		cnt++;
-		if (n == 81)cout << endl;
-	}
 }
 
 void dfs(int n) {
