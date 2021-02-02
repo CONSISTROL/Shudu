@@ -44,7 +44,7 @@ void output() {
 void bar(int n) {//进度条
 	static int cnt = 0;
 	static int bar_time = clock();
-	if (clock() - bar_time > 1000 && clock() - program_time > 5000) {//长时间未响应，给出提示
+	if (clock() - bar_time > 1000 && clock() - program_time > 4000) {//长时间未响应，给出提示
 		bar_time = clock();
 		//cnt = 0;//会回弹
 		printf(" waiting time:%2.0fs", float(bar_time - program_time) / 1000);
