@@ -96,9 +96,9 @@ bool check(int n, int key) {
 	int i, j;
 	int x = n / 9 / 3 * 3;//row
 	int y = n % 9 / 3 * 3;//column
-	for (j = 0; j < 8; j++)
+	for (j = 0; j < 9; j++)
 		if (num[n / 9][j] == key)return false;//row
-	for (i = 0; i < 8; i++)
+	for (i = 0; i < 9; i++)
 		if (num[i][n % 9] == key)return false;//column
 	for (i = x; i < x + 3; i++)
 		for (j = y; j < y + 3; j++)
@@ -115,13 +115,14 @@ void dfs(int n) {
 	int y = n % 9;
 
 	if (num[x][y] != 0)dfs(n + 1);
-
-	for (i = 1; i < 10; i++) {
-		if (check(n, i)) {
-			num[x][y] = i;
-			dfs(n + 1);
-			if (sign == true) return;
-			num[x][y] = 0;
+	else {
+		for (i = 1; i < 10; i++) {
+			if (check(n, i)) {
+				num[x][y] = i;
+				dfs(n + 1);
+				if (sign == true) return;
+				num[x][y] = 0;
+			}
 		}
 	}
 }
