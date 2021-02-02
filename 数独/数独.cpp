@@ -1,35 +1,60 @@
 ﻿#include<iostream>
 #include<ctime>
+#include<fstream>
 using namespace std;
 
 int num[9][9];
 bool sign = false;
 int program_time;
 
-void input();
-void output();
+int input(int);
+void output(int);
 bool check(int n, int key);
 void dfs(int n);
 
 int main() {
-	input();
-	program_time = clock();
+	cout << "手动输入请按1,文件输入请按2" << endl;
+	int n; cin >> n;
+	if (input(n)) return 0;
+	program_time = clock();//从这开始记录时间
 	dfs(0);
-	output();
-	cout << "The run time is: " << double(clock() - program_time) / 1000 << "s" << endl;
+	output(1);
 	return 0;
 }
 
-void input() {
+int input(int n) {
 	cout << "input:" << endl;
-	int i, j;
-	for (i = 0; i < 9; i++)
-		for (j = 0; j < 9; j++)
-			cin >> num[i][j];
+	switch (n) {
+	case 1:
+		int i, j;
+		for (i = 0; i < 9; i++)
+			for (j = 0; j < 9; j++)
+				cin >> num[i][j];
+		break;
+	case 2:
+		ifstream in("in.txt");
+		if (!in.is_open()) { 
+			cout << "file error" << endl; 
+			return 1;
+		}
+
+		int t1;
+		cout << "读取数组" << endl;
+		int*p = &num[0][0];
+		while (in >> t1)//遇到空白符结束
+		{
+			*p = t1;
+			p++;
+		}
+		in.close();
+		output(0);
+		break;
+	}
+	return 0;
 }
 
-void output() {
-	cout << "output:" << endl;
+void output(int n) {
+	if(n) cout << "output:" << endl;
 	int i, j;
 	for (i = 0; i < 9; i++) {
 		if (i % 3 == 0)cout << endl;
@@ -39,6 +64,7 @@ void output() {
 		}
 		cout << endl;
 	}
+	if(n) cout << "The run time is: " << double(clock() - program_time) / 1000 << "s" << endl;
 }
 
 void bar(int n) {//进度条
