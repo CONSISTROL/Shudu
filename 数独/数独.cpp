@@ -13,12 +13,17 @@ bool check(int n, int key);
 void dfs(int n);
 
 int main() {
-	cout << "控制台输入请按1,文件输入请按2" << endl;
-	int n; cin >> n;
-	if (input(n)) return 0;
-	program_time = clock();//从这开始记录时间
-	dfs(0);
-	output(1);
+	int m;
+	do {
+		cout << "控制台输入请按1,文件输入请按2" << endl;
+		int n; cin >> n;
+		if (input(n)) return 0;
+		program_time = clock();//从这开始记录时间
+		dfs(0);
+		output(1);
+		cout << "continue..?\n1.yes 2.no\n";
+		cin >> m;
+	} while (m==1);
 	return 0;
 }
 
@@ -42,8 +47,8 @@ int input(int n) {
 		int t1;
 		cout << "读取数组" << endl;
 		int*p = &num[0][0];
-		while (in >> t1)//遇到空白符结束
-		{
+		for (int i = 0; i < 81;i++) {
+			in >> t1;
 			*p = t1;
 			p++;
 		}
